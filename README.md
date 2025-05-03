@@ -1,5 +1,5 @@
 # Introduction
-We will continue from hw1, the previous website. You will write a backend express server and a mongo database instead of the JSON server.
+We will continue from hw1, the previous website. You will write a backend express server and use a mongo database instead of the JSON server.
 
 ## Submission
 - Coding: 70%, Questions: 30%.
@@ -50,7 +50,7 @@ Requirements for AI usage:
 # Project parts
 ## Database
 ### Mongo server
-- It's recommender to use the atlas mongodb to store the notes. Open a free account and initialize a new database in Atlas. For more details, follow the example from [Saving data to MongoDB- MongoDB](https://fullstackopen.com/en/part3/saving_data_to_mongo_db#mongo-db). 
+- It's recommended to use the atlas mongodb to store the notes. Open a free account and initialize a new database in Atlas. For more details, follow the example from [Saving data to MongoDB- MongoDB](https://fullstackopen.com/en/part3/saving_data_to_mongo_db#mongo-db). 
 - You can also use a [local mongo database](https://www.mongodb.com/docs/manual/installation/). 
 - The University's firewall prevents connection with Atlas. You can use hotspot from your phone to work around it.
 - The mongodb URL is inside the a .env file. It also contains the password for access, so we don't share the .env file. We will test using our own .env.
@@ -103,7 +103,7 @@ Requirements for AI usage:
      - Target route
      - Request body (if applicable)
 
-- **Note Ordering**
+- **Note Order**
    - Notes returned from `/notes` must be sorted by MongoDB `_id` (newest first).
 ```js
 db.collection.find().sort({ _id: -1 })  // Newest first
@@ -114,7 +114,7 @@ db.collection.find().sort({ _id: -1 })  // Newest first
     - and the return format is identical to json-server's format.
 
 
-- **Max data limit**
+- **Data transfer limit**
     - We always get no more than 10 notes in a single mongodb request. Which 10 is decided by parsing URL query parameters sent by the frontend. Look for `req.query` in [express docs](https://expressjs.com/en/api.html#req).
 
 - **Backend - Jest:** 4 tests, one for each action in CRUD, write them in `crud.test.ts`. Your test should pass after running `npm run test` from the backend directory. Notice that the test runs the backend server by default.
@@ -198,7 +198,7 @@ expressApp and server are separated for flexibility and reusability.
 ```
 ### Frontend code requirements
 - **Reducer and Context:** Use the reducer and context pattern from [Scaling Up with Reducer and Context](https://react.dev/learn/scaling-up-with-reducer-and-context).
-- **Playwright:** 4 tests, one for each action in CRUD, write them in `frontend/playwright-tests/test.spec.ts`. Your test should pass after running `npm run test` from the frontend directory.Notice that the test does not run the test by default.
+- **Playwright:** 4 tests, one for each action in CRUD, write them in `frontend/playwright-tests/test.spec.ts`. Your test should pass after running `npm run test` from the frontend directory. Notice that playwright does not run the server by default.
 
 #### Example playwright config
 ```json
@@ -213,7 +213,7 @@ export default defineConfig({
 ```
 
 ### Frontend unit testing requirements
-- We align with with the standard testing attribute, (data-testid)[https://playwright.dev/docs/locators#locate-by-test-id].
+- We align with with the standard testing attribute, (data-testid[https://playwright.dev/docs/locators#locate-by-test-id].
 - Each note should have an `Edit`/`Delete` button. The delete is straightforward, and the edit will make the text inside the note editable. Specifically:
     - Edit button: 
         - data-testid attribute: **"edit-<note_id>"**.
@@ -264,13 +264,13 @@ export default defineConfig({
         <button name="text_input_cancel_new_note">Cancel</button>    
       </div>
       ```
-- `Notification area`:
+- `Notification area`, text status for the user:
     - class name attribute: **"notification"**. For example: `<div class="notification">Notification area</div>`
     - Its content should be one of four text options: 
         - Initially: `Notification area`
         - After a succesful add/delete/update: `Added a new note`, `Note deleted`, `Note updated`
 
-# Extras
+# Misc
 ## The tester will:
 - `git clone <your_submitted_github_repo>`
 - `cd <cloned_dir>`
@@ -311,28 +311,33 @@ app.get('/health', (req, res) => res.send('OK'));
 
 ## Recommendation: single error handling in a middleware and express-async-errors:
 Place this after all routes and middlewares in your main server file:
-```js
-app.use((err, req, res, next) => {
+```ts
+import { Request, Response, NextFunction } from 'express';
+
+app.use((err: any, req: Request, res: Response, next: NextFunction) => {
   const status = err.status || 500;
   res.status(status).json({ error: err.message || 'Internal Server Error' });
 });
 ```
 
 Now you can write async routes without try/catch, and errors will still be caught:
-```js
-require('express-async-errors');
-app.get('/notes/:id', async (req, res) => {
+```ts
+import 'express-async-errors';
+
+app.get('/notes/:id', async (req: Request, res: Response) => {
   const note = await Note.findById(req.params.id);
   if (!note) {
     throw new Error('Note not found'); // This will still be caught
   }
   res.json(note);
 });
+
+
 ```
 
-- Afterwards, this code
-```js
-exports.getAllNotes = async (req, res) => {
+Afterwards, this code
+```ts
+export const getAllNotes = async (req: Request, res: Response) => {
   try {
     const { notes, count } = await noteService.getAllNotes(req.query);
     res.set('X-Total-Count', count);
@@ -341,10 +346,11 @@ exports.getAllNotes = async (req, res) => {
     res.status(500).json({ message: 'Error fetching notes', error });
   }
 };
+
 ```
-turns to this code:
-```js
-exports.getAllNotes = async (req, res) => {
+turns to this shorter, cleaner code:
+```ts
+export const getAllNotes = async (req: Request, res: Response) => {
   const { notes, count } = await noteService.getAllNotes(req.query);
   res.set('X-Total-Count', count);
   res.status(200).json(notes);
@@ -387,7 +393,7 @@ Your backend should respond with appropriate HTTP status codes according to the 
 
 ## Test-Driven Development (TDD)
 Test-Driven Development (TDD) is a software development approach where tests are written before writing the actual implementation code. This exercise is a good opportunity to try this method.
-- [A recent talk by the Creator of TDD](https://youtu.be/C5IH0ABmyc0?t=1306) – A session explaining the principles and motivation behind TDD.
+- [A recent talk by the Creator of TDD](https://youtu.be/C5IH0ABmyc0?t=1306) – A session explaining the principles and motivation behind TDD: you can skip straight to the practical part.
 
 ## .gitignore partial example
 ```bash
@@ -396,7 +402,6 @@ Test-Driven Development (TDD) is a software development approach where tests are
 **/node_modules
 
 # local env files
-.env
 .vscode/
 
 backend/log.txt
