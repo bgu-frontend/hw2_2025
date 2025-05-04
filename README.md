@@ -17,7 +17,7 @@ We will continue from hw1, the previous website. You will write a backend expres
   - to test your submission, run the presubmission script (in github). A submission that does not pass the presubmission script, gets a 0 score automatically.
       For example: 
       ```bash
-      bash presubmission_hw2.sh git@github.com:bgu-frontend/hw1_2025.git ./.env
+      bash presubmission.sh git@github.com:bgu-frontend/hw1_2025.git ./.env
       ``` 
       - Tip: You can use a local git directory as the target git repository.
       - Tip: You can make the presubmission script to run automatically during every git push.
