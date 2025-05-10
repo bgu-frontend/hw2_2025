@@ -213,7 +213,7 @@ export default defineConfig({
 ```
 
 ### Frontend unit testing requirements
-- We align with with the standard testing attribute, (data-testid[https://playwright.dev/docs/locators#locate-by-test-id].
+- We align with with the standard testing attribute, (data-testid)[https://playwright.dev/docs/locators#locate-by-test-id].
 - Each note should have an `Edit`/`Delete` button. The delete is straightforward, and the edit will make the text inside the note editable. Specifically:
     - Edit button: 
         - data-testid attribute: **"edit-<note_id>"**.
@@ -225,7 +225,7 @@ export default defineConfig({
         - name attribute **"delete-<note_id>"**. 
         - when clicked, the frontend updates by refreshing the same page.
         - we will not test the scenario in which a delete operation empties the current page (and then we might need to change a page).
-- Update notes: for consistency in playwright test code, please replace the note's `id` HTML attribute  with `data-testid`. 
+- Update notes: for consistency with Playwright standards, please replace the note's `id` HTML attribute  with `data-testid`. 
   #### Example expected HTML:
     ```html
     <div class="note" data-testid="68160458f7eef8a0cfc10902">
@@ -250,7 +250,7 @@ export default defineConfig({
   ```
 
 
-- `Add new note` button: we will only test the body of the new note, (content field).
+- `Add new note` button: we will only test the body of the new note, (content field). (Update: appears in the first page or all pages).
     - button name attribute **"add_new_note"**.
     - When clicked, React should render a text input:
         - It should be editable
