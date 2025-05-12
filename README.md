@@ -5,7 +5,7 @@ We will continue from hw1, the previous website. You will write a backend expres
 - Coding: 70%, Questions: 30%.
 - Your submitted git repo should be *private*, please add 'barashd@post.bgu.ac.il', 'Gurevichronen@gmail.com', 'daninost', and 'Gal-Fadlon' to the list of collaborators.
 - Do not use external libraries that provide the pagination component. If in doubt, contact the course staff.
-- Deadline: 18.5.25, end of day.
+- Deadline: 18.5.25, end of day. Updated: 25.5.25.
 - Additionally, solve the [theoretical questions](https://forms.gle/R1xSihBMavb2tWzC6).
 - Use TypeScript, and follow the linter's warnings (see eslint below). The linter can be faulty; use it to get early signs of bugs, the automatic tests will not take away points for linter warnings.
 - The ex2 forum is open for questions in Moodle. It's highly recommended to use it for design, technical issues, and any general subject.
