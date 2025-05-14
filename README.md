@@ -279,7 +279,7 @@ export default defineConfig({
 - `npm run dev` from the `frontend` dir  (configured to default port 3000)
 - Copy a `.env` file into the `backend` dir.
 - `npm install` from the `backend` dir (package.json should exist)
-- `node index.js` from the `backend` dir (configured to default port 3001)
+- `npm run dev` from the `backend` dir (configured to default port 3001) (previously: `node index.js`)
 - Run tests: frontend (playwright) and backend (jest).
 
 ## Example launch.json
