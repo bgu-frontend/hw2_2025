@@ -121,8 +121,8 @@ db.collection.find().sort({ _id: -1 })  // Newest first
 - **Package.json should support**
 ```json
   "scripts": {
-    "start": "node server.js",
-    "dev": "NODE_ENV=dev nodemon server.js",
+    "start": "node server.ts",
+    "dev": "NODE_ENV=dev nodemon server.ts",
     "test": "jest"
   },
 ```
