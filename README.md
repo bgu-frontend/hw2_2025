@@ -118,14 +118,16 @@ db.collection.find().sort({ _id: -1 })  // Newest first
     - We always get no more than 10 notes in a single mongodb request. Which 10 is decided by parsing URL query parameters sent by the frontend. Look for `req.query` in [express docs](https://expressjs.com/en/api.html#req).
 
 - **Backend - Jest:** 4 tests, one for each action in CRUD, write them in `crud.test.ts`. Your test should pass after running `npm run test` from the backend directory. Notice that the test runs the backend server by default.
-- **Package.json should support**
+- **Package.json should support the running alias ** you can replace the command after the ':', but not the 'start'/'dev'/'test' aliases
+
 ```json
   "scripts": {
-    "start": "node server.ts",
-    "dev": "NODE_ENV=dev nodemon server.ts",
-    "test": "jest"
+    "start": "node server.ts", ### (start the backend in normal mode)
+    "dev": "NODE_ENV=dev nodemon server.ts", ### (start the backend in dev mode)
+    "test": "jest" ### (run the backend tests)
   },
 ```
+
 `NODE_ENV` allows to enable special routes for development only: for example, delete all notes. Then, you can use:
 ```js
 if (process.env.NODE_ENV === 'dev'){
